@@ -2,6 +2,7 @@ package com.raywenderlich.alltherecipes;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,21 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RecipeAdapter extends BaseAdapter{
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<Recipe> mDataSource;
+
+    private static final HashMap<String, Integer> LABEL_COLORS = new HashMap<String, Integer>() {{
+        put("Low-Carb", R.color.colorLowCarb);
+        put("Low-Fat", R.color.colorLowFat);
+        put("Low-Sodium", R.color.colorLowSodium);
+        put("Medium-Carb", R.color.colorMediumCarb);
+        put("Vegetarian", R.color.colorVegetarian);
+        put("Balanced", R.color.colorBalanced);
+    }};
 
     public RecipeAdapter(Context context, ArrayList<Recipe> items) {
         mContext = context;
@@ -86,6 +97,8 @@ public class RecipeAdapter extends BaseAdapter{
 
         Typeface detailTypeFace = Typeface.createFromAsset(mContext.getAssets(), "fonts/Quicksand-Bold.otf");
         detailTextView.setTypeface(detailTypeFace);
+
+        detailTextView.setTextColor(ContextCompat.getColor(mContext, LABEL_COLORS.get(recipe.label)));
 
         return rowView;
     }
