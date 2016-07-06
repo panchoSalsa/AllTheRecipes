@@ -55,6 +55,7 @@ public class RecipeAdapter extends BaseAdapter{
     //4
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        /*
         // Get view for row item
         View rowView = mInflater.inflate(R.layout.list_item_recipe, parent, false);
 
@@ -74,6 +75,37 @@ public class RecipeAdapter extends BaseAdapter{
         // Get thumbnail element
         ImageView thumbnailImageView =
                 (ImageView) rowView.findViewById(com.raywenderlich.alltherecipes.R.id.recipe_list_thumbnail);
+
+        */
+
+        ViewHolder holder;
+
+        // 1
+        if(convertView == null) {
+
+            // 2
+            convertView = mInflater.inflate(R.layout.list_item_recipe, parent, false);
+
+            // 3
+            holder = new ViewHolder();
+            holder.thumbnailImageView = (ImageView) convertView.findViewById(R.id.recipe_list_thumbnail);
+            holder.titleTextView = (TextView) convertView.findViewById(R.id.recipe_list_title);
+            holder.subtitleTextView = (TextView) convertView.findViewById(R.id.recipe_list_subtitle);
+            holder.detailTextView = (TextView) convertView.findViewById(R.id.recipe_list_detail);
+
+            // 4
+            convertView.setTag(holder);
+        }
+        else{
+            // 5
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        // 6
+        TextView titleTextView = holder.titleTextView;
+        TextView subtitleTextView = holder.subtitleTextView;
+        TextView detailTextView = holder.detailTextView;
+        ImageView thumbnailImageView = holder.thumbnailImageView;
 
 
         // 1
@@ -100,7 +132,16 @@ public class RecipeAdapter extends BaseAdapter{
 
         detailTextView.setTextColor(ContextCompat.getColor(mContext, LABEL_COLORS.get(recipe.label)));
 
-        return rowView;
+        return convertView;
+
+    }
+
+    private static class ViewHolder {
+        public TextView titleTextView;
+        public TextView subtitleTextView;
+        public TextView detailTextView;
+        public ImageView thumbnailImageView;
+
     }
 
 }
